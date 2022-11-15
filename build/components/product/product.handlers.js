@@ -61,40 +61,18 @@ var ProductHandler = /** @class */ (function () {
                         return [4 /*yield*/, product.allProducts()];
                     case 1:
                         productsList = _a.sent();
-                        return [2 /*return*/, res.status(200).json({ ProductsList: productsList })];
+                        return [2 /*return*/, res.status(200).json({ productsList: productsList })];
                     case 2:
                         err_1 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wrong,".concat(err_1) })];
+                        return [2 /*return*/, res.status(500).json({ err: err_1 })];
                     case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ProductHandler.prototype.getProductsByCat = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var category, catProducts, err_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        category = String(req.body.category);
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, product.findProductsByCategory(category)];
-                    case 2:
-                        catProducts = _a.sent();
-                        return [2 /*return*/, res.status(200).json({ productsList: catProducts })];
-                    case 3:
-                        err_2 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wrong,".concat(err_2) })];
-                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
     ProductHandler.prototype.getOneProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var productId, oneProduct, err_3;
+            var productId, oneProduct, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -107,8 +85,8 @@ var ProductHandler = /** @class */ (function () {
                         oneProduct = _a.sent();
                         return [2 /*return*/, res.status(200).json({ product: oneProduct })];
                     case 3:
-                        err_3 = _a.sent();
-                        return [2 /*return*/, res.status(500).json({ message: "Something went wrong,".concat(err_3) })];
+                        err_2 = _a.sent();
+                        return [2 /*return*/, res.status(500).json({ message: "Something went wrong,".concat(err_2) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -116,27 +94,55 @@ var ProductHandler = /** @class */ (function () {
     };
     ProductHandler.prototype.createNewProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newProduct, productInfo;
+            var newProduct, productInfo, err_3;
             return __generator(this, function (_a) {
-                newProduct = {
-                    pname: req.body.pname,
-                    price: req.body.price,
-                    category: req.body.category
-                };
-                try {
-                    productInfo = product.CreateNewProduct(newProduct);
-                    return [2 /*return*/, res.status(201).json({ message: 'Product created' })];
+                switch (_a.label) {
+                    case 0:
+                        newProduct = {
+                            pname: req.body.pname,
+                            price: req.body.price,
+                            category: req.body.category
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, product.CreateNewProduct(newProduct)];
+                    case 2:
+                        productInfo = _a.sent();
+                        return [2 /*return*/, res.status(201).json({ productInfo: productInfo })];
+                    case 3:
+                        err_3 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_3) })];
+                    case 4: return [2 /*return*/];
                 }
-                catch (err) {
-                    return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err) })];
+            });
+        });
+    };
+    ProductHandler.prototype.getProductsByCat = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var category, catProducts, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        category = req.body.category;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, product.findProductsByCategory(category)];
+                    case 2:
+                        catProducts = _a.sent();
+                        return [2 /*return*/, res.status(200).json({ productsList: catProducts })];
+                    case 3:
+                        err_4 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_4) })];
+                    case 4: return [2 /*return*/];
                 }
-                return [2 /*return*/];
             });
         });
     };
     ProductHandler.prototype.getTopFiveProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var TopFive, err_4;
+            var TopFive, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -146,8 +152,8 @@ var ProductHandler = /** @class */ (function () {
                         TopFive = _a.sent();
                         return [2 /*return*/, res.status(200).json({ products: TopFive })];
                     case 2:
-                        err_4 = _a.sent();
-                        return [2 /*return*/, res.status(500).json({ message: "Something went wrong,".concat(err_4) })];
+                        err_5 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_5) })];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -155,7 +161,7 @@ var ProductHandler = /** @class */ (function () {
     };
     ProductHandler.prototype.UpdateProduct = function (_req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var column, value, productId, productUpdated, err_5;
+            var column, value, productId, productUpdated, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -170,8 +176,8 @@ var ProductHandler = /** @class */ (function () {
                         productUpdated = _a.sent();
                         return [2 /*return*/, res.status(200).json({ message: 'successfuly Update' })];
                     case 3:
-                        err_5 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wrong,".concat(err_5) })];
+                        err_6 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wrong,".concat(err_6) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -179,7 +185,7 @@ var ProductHandler = /** @class */ (function () {
     };
     ProductHandler.prototype.deleteProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var productId, productDeleted, err_6;
+            var productId, productDeleted, err_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -192,8 +198,8 @@ var ProductHandler = /** @class */ (function () {
                         productDeleted = _a.sent();
                         return [2 /*return*/, res.status(200).json("Product id: ".concat(productId, " deleted"))];
                     case 3:
-                        err_6 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wrong,".concat(err_6) })];
+                        err_7 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wrong,".concat(err_7) })];
                     case 4: return [2 /*return*/];
                 }
             });

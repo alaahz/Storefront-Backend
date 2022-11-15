@@ -10,23 +10,33 @@ import {ProductType} from './product.interface';
 export class Product{
     static tableName = 'products';
 
-    // Get all the products stored in the database (products table)
-    async allProducts():Promise<ProductType[]>{
+      // Get all the products stored in the database (products table)
+      async allProducts():Promise<ProductType[]>{
+        // try{
+        //     //@ts-ignore
+        //     const connection = await client.connect();
+        //     const sql = `SELECT id, pname,price, category FROM ${Product.tableName}`;
+        //     const result = await connection.query(sql)
+        //     const list = result.rows;
+        //     connection.release();
+        //     return list;
+
+        // }catch(err){
+        //     throw new Error(`Could not get all products ${err}`)
+        // }
         try{
             //@ts-ignore
             const connection = await client.connect();
-            const sql = `SELECT * FROM ${Product.tableName}`;
+            const sql = 'SELECT * FROM products'
             const result = await connection.query(sql)
-            const list = result.rows;
             connection.release();
-            console.log('list',list)
-            return list;
-
+            return result.rows;
 
         }catch(err){
             throw new Error(`Could not get all products ${err}`)
         }
     }
+    
     
     // Returning product information by giving product Id
     async findProductById(productId:number):Promise<ProductType>{
@@ -49,8 +59,9 @@ export class Product{
              const connection = await client.connect();
              const sql = `INSERT INTO ${Product.tableName}(pname,price, category) VALUES($1,$2,$3) RETURNING *`;
              const result = await connection.query(sql,[product.pname, product.price,product.category])
+             const productN = await result.rows[0];
              connection.release();
-             return result.rows[0];
+             return productN
 
         }catch(err){
             throw new Error(`Could not add new product to ${Product.tableName} table, ${err}`)
@@ -62,7 +73,7 @@ export class Product{
         try{
             //@ts-ignore
             const connection = await client.connect();
-            const sql = `SELECT * FROM ${Product.tableName} WHERE category=($1)`;
+            const sql = `SELECT * FROM ${Product.tableName} WHERE category = $1`;
             const result = await connection.query(sql,[category])
             connection.release();
             return result.rows;

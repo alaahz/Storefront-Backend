@@ -1,78 +1,72 @@
 import app from '../../server'
 import supertest from 'supertest';
 
-
+const request =  supertest(app)
 describe('Testing Product Endpoints: ', function() {
-
-    let token ='';
-    
-    // beforeAll used to call signin endpoint and generate token to use it in each case 
-    beforeAll( async function(){
-        const response = await supertest(app).post('/signin')
-      .send({
+     const testUser = {
+        firstname: 'Alaa',
+        lastname: 'Alhazmi',
         email: 'alaahz@test.com',
         password: '12345',
-      });
-      token = response.body.token
+
+    }
+    const testProduct={
+      pname:'Java Progamming',
+      price:20,
+      category:'Book'
+    }
+    let productID :number;
+    let userID :number;
+    let token ='';
+    //beforeAll used to call signup endpoint and return token and  userId to use it in each case 
+    beforeAll( async function(){
+      const response1 = await request.post('/signup')
+      .send(testUser);
+      userID = response1.body.userInfo.id
+      token = response1.body.token  
+      const response2 = await request.post('/products/newProduct')
+      .set('Authorization',`Bearer ${token}`)
+      .send(testProduct);
+      productID = response2.body.productInfo.id
+
+
     })
-    it('Create new Product returning 201', async function() {   
-        const response = await supertest(app)
-          .post('/products/newProduct')
-          .set('Authorization',`Bearer ${token}`)
-          .send({
-            pname:'Java Progamming',
-            price:20,
-            category:'Book'
-          })
-        expect(response.statusCode).toBe(201);
-    }); 
+    it('Create new Product returning 201', async function() {
+      const response = await supertest(app)
+        .post('/products/newProduct')
+        .set('Authorization',`Bearer ${token}`)
+        .send({
+          pname:'IPhone 13',
+          price:5000,
+          category:'Tech'
+        })
+      expect(response.statusCode).toBe(201);
+}); 
+
 
     it('Get product info returning 200', async function() {
     const response = await supertest(app)
-    .get(`/products/${4}`)
+    .get(`/products/${productID}`)
     expect(response.statusCode).toBe(200);
-    console.log(response.body);
+
     });  
 
-    it('Get All Products returning 200', async function() {
-        const response = await supertest(app)
-        .get('/products/allproducts')
-        expect(response.statusCode).toBe(200);
-        console.log(response.body);
 
-    }); 
 
     it('Get category products returning 200', async function() {
         const response = await supertest(app)
-          .get('/products/productsCategory')
+          .post('/products/productsCategory')
           .send({
             category:'Book',
           })
         expect(response.statusCode).toBe(200);
-        console.log(response.body);
-
-      }); 
-    it('Returing 400 beacuse the category is wrong', async function() {
-        const response1 = await supertest(app)
-          .get('/products/productsCategory')
-          .send({
-            category:'Music',
-          });
-        expect(response1.statusCode).toBe(400);
-        console.log(response1.body)
 
       });   
-    it('Get the top 5 products', async function() {
-            const response = await supertest(app)
-            .get('/products/TopProducts')
-            expect(response.statusCode).toBe(200);
-            console.log(response.body);
 
-      }); 
 
     it('Update product information returning 200', async function() {
         const response = await supertest(app)
-          .put(`/products/update/${3}`)
+          .put(`/products/update/${productID}`)
           .set('Authorization',`Bearer ${token}`)
           .send({
             colName: 'pname',
@@ -84,7 +78,7 @@ describe('Testing Product Endpoints: ', function() {
         const response = await supertest(app)
           .delete('/products/delete')
           .send({
-            productId:2
+            productId:productID
           })
           .set('Authorization',`Bearer ${token}`)
         expect(response.statusCode).toBe(200);

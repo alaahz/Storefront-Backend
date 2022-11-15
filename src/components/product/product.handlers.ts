@@ -19,24 +19,14 @@ export class ProductHandler {
     async getAllProducts(req: Request, res: Response){
         try{
             const productsList = await product.allProducts();
-           return res.status(200).json({ProductsList:productsList})
-
+            return res.status(200).json({productsList})
         }catch(err){
-            return res.status(400).json({message:`Something went wrong,${err}`})
+            return res.status(500).json({err})
         }
 
         
     }
-    async getProductsByCat(req: Request, res: Response){
-        const category = String(req.body.category);
-        try{
-            const catProducts = await product.findProductsByCategory(category);
-          return  res.status(200).json({productsList:catProducts})
-        }catch(err){
-            return res.status(400).json({message:`Something went wrong,${err}`})
-        }
 
-    }
     async getOneProduct(req: Request, res: Response){
 
         const productId = parseInt(req.params.productId)
@@ -55,8 +45,8 @@ export class ProductHandler {
             category: req.body.category as string
         }
         try{
-            const productInfo = product.CreateNewProduct(newProduct)
-          return  res.status(201).json({message: 'Product created'})
+          const productInfo = await product.CreateNewProduct(newProduct)
+          return  res.status(201).json({productInfo})
 
         }catch(err){
             return res.status(400).json({message:`Something went wront,${err}`})
@@ -64,12 +54,22 @@ export class ProductHandler {
 
     }
 
+    async getProductsByCat(req: Request, res: Response){
+        const category = (req.body.category as unknown) as string;
+        try{
+            const catProducts = await product.findProductsByCategory(category);
+          return  res.status(200).json({productsList:catProducts})
+        }catch(err){
+            return res.status(400).json({message:`Something went wront,${err}`})
+        }
+
+    }
     async getTopFiveProduct(req: Request, res: Response){
         try{
             const TopFive = await product.popularProduct();
            return res.status(200).json({products: TopFive})
         }catch(err){
-            return res.status(500).json({message:`Something went wrong,${err}`})
+            return res.status(400).json({message:`Something went wront,${err}`})
         }
 
     }

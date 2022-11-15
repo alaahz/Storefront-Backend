@@ -5,9 +5,9 @@ import {verifyAuthToken} from '../../middlewares/verifyAuthToken'
 const productHandler = new ProductHandler();
 const productRouters = (app:Express) =>{
     app.get('/products/:productId', productHandler.getOneProduct)
-    app.get('/products/allproducts', productHandler.getAllProducts)
-    app.get('/products/productsCategory',productHandler.getProductsByCat)
+    app.post('/products/productsCategory',productHandler.getProductsByCat)
     app.get('/products/TopProducts',productHandler.getTopFiveProduct)
+    app.get('/products/allproducts', productHandler.getAllProducts)
     app.post('/products/newProduct', verifyAuthToken,productHandler.createNewProduct)
     app.put('/products/update/:productId',verifyAuthToken,productHandler.UpdateProduct)
     app.delete('/products/delete',verifyAuthToken,productHandler.deleteProduct)

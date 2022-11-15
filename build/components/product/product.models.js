@@ -52,7 +52,7 @@ var Product = /** @class */ (function () {
     // Get all the products stored in the database (products table)
     Product.prototype.allProducts = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, sql, result, list, err_1;
+            var connection, sql, result, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -60,14 +60,12 @@ var Product = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = "SELECT * FROM ".concat(Product.tableName);
+                        sql = 'SELECT * FROM products';
                         return [4 /*yield*/, connection.query(sql)];
                     case 2:
                         result = _a.sent();
-                        list = result.rows;
                         connection.release();
-                        console.log('list', list);
-                        return [2 /*return*/, list];
+                        return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
                         throw new Error("Could not get all products ".concat(err_1));
@@ -104,11 +102,11 @@ var Product = /** @class */ (function () {
     // Create new product by giving product name, price and category
     Product.prototype.CreateNewProduct = function (product) {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, sql, result, err_3;
+            var connection, sql, result, productN, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 4, , 5]);
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
@@ -116,12 +114,15 @@ var Product = /** @class */ (function () {
                         return [4 /*yield*/, connection.query(sql, [product.pname, product.price, product.category])];
                     case 2:
                         result = _a.sent();
-                        connection.release();
-                        return [2 /*return*/, result.rows[0]];
+                        return [4 /*yield*/, result.rows[0]];
                     case 3:
+                        productN = _a.sent();
+                        connection.release();
+                        return [2 /*return*/, productN];
+                    case 4:
                         err_3 = _a.sent();
                         throw new Error("Could not add new product to ".concat(Product.tableName, " table, ").concat(err_3));
-                    case 4: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -137,7 +138,7 @@ var Product = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = "SELECT * FROM ".concat(Product.tableName, " WHERE category=($1)");
+                        sql = "SELECT * FROM ".concat(Product.tableName, " WHERE category = $1");
                         return [4 /*yield*/, connection.query(sql, [category])];
                     case 2:
                         result = _a.sent();

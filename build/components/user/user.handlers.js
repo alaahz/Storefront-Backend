@@ -71,7 +71,7 @@ var UserHandler = /** @class */ (function () {
                     case 2:
                         newUser = _a.sent();
                         token = jsonwebtoken_1.default.sign({ u: newUser }, UserHandler.tokenSecret);
-                        return [2 /*return*/, res.status(201).json({ token: token })];
+                        return [2 /*return*/, res.status(201).json({ token: token, userInfo: newUser })];
                     case 3:
                         err_1 = _a.sent();
                         return [2 /*return*/, res.status(400).json("Could not sign up, ".concat(err_1))];

@@ -41,22 +41,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var server_1 = __importDefault(require("../../server"));
 var supertest_1 = __importDefault(require("supertest"));
+var request = (0, supertest_1.default)(server_1.default);
 describe('Testing Product Endpoints: ', function () {
+    var testUser = {
+        firstname: 'Alaa',
+        lastname: 'Alhazmi',
+        email: 'alaahz@test.com',
+        password: '12345',
+    };
+    var testProduct = {
+        pname: 'Java Progamming',
+        price: 20,
+        category: 'Book'
+    };
+    var productID;
+    var userID;
     var token = '';
-    // beforeAll used to call signin endpoint and generate token to use it in each case 
+    //beforeAll used to call signup endpoint and return token and  userId to use it in each case 
     beforeAll(function () {
         return __awaiter(this, void 0, void 0, function () {
-            var response;
+            var response1, response2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default).post('/signin')
-                            .send({
-                            email: 'alaahz@test.com',
-                            password: '12345',
-                        })];
+                    case 0: return [4 /*yield*/, request.post('/signup')
+                            .send(testUser)];
                     case 1:
-                        response = _a.sent();
-                        token = response.body.token;
+                        response1 = _a.sent();
+                        userID = response1.body.userInfo.id;
+                        token = response1.body.token;
+                        return [4 /*yield*/, request.post('/products/newProduct')
+                                .set('Authorization', "Bearer ".concat(token))
+                                .send(testProduct)];
+                    case 2:
+                        response2 = _a.sent();
+                        productID = response2.body.productInfo.id;
                         return [2 /*return*/];
                 }
             });
@@ -71,9 +89,9 @@ describe('Testing Product Endpoints: ', function () {
                             .post('/products/newProduct')
                             .set('Authorization', "Bearer ".concat(token))
                             .send({
-                            pname: 'Java Progamming',
-                            price: 20,
-                            category: 'Book'
+                            pname: 'IPhone 13',
+                            price: 5000,
+                            category: 'Tech'
                         })];
                     case 1:
                         response = _a.sent();
@@ -89,27 +107,10 @@ describe('Testing Product Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get("/products/".concat(4))];
+                            .get("/products/".concat(productID))];
                     case 1:
                         response = _a.sent();
                         expect(response.statusCode).toBe(200);
-                        console.log(response.body);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    });
-    it('Get All Products returning 200', function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get('/products/allproducts')];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.statusCode).toBe(200);
-                        console.log(response.body);
                         return [2 /*return*/];
                 }
             });
@@ -121,49 +122,13 @@ describe('Testing Product Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get('/products/productsCategory')
+                            .post('/products/productsCategory')
                             .send({
                             category: 'Book',
                         })];
                     case 1:
                         response = _a.sent();
                         expect(response.statusCode).toBe(200);
-                        console.log(response.body);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    });
-    it('Returing 400 beacuse the category is wrong', function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get('/products/productsCategory')
-                            .send({
-                            category: 'Music',
-                        })];
-                    case 1:
-                        response1 = _a.sent();
-                        expect(response1.statusCode).toBe(400);
-                        console.log(response1.body);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    });
-    it('Get the top 5 products', function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get('/products/TopProducts')];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.statusCode).toBe(200);
-                        console.log(response.body);
                         return [2 /*return*/];
                 }
             });
@@ -175,7 +140,7 @@ describe('Testing Product Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .put("/products/update/".concat(3))
+                            .put("/products/update/".concat(productID))
                             .set('Authorization', "Bearer ".concat(token))
                             .send({
                             colName: 'pname',
@@ -197,7 +162,7 @@ describe('Testing Product Endpoints: ', function () {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
                             .delete('/products/delete')
                             .send({
-                            productId: 2
+                            productId: productID
                         })
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:

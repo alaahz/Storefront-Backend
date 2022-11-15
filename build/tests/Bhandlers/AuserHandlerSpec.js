@@ -46,36 +46,41 @@ describe('Testing User Endpoint: ', function () {
     var testUser = {
         firstname: 'Alaa',
         lastname: 'Alhazmi',
-        email: 'alaahz@test.com',
+        email: 'alaahz1@test.com',
         password: '12345',
     };
+    var userID;
     var token = '';
-    // beforeAll used to call signin endpoint and generate token to use it in each case 
+    // beforeAll used to call signup endpoint and return token and  userId to use it in each case 
     beforeAll(function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request.post('/signin')
-                            .send({
-                            email: 'alaahz@test.com',
-                            password: '12345',
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        token = response.body.token;
-                        return [2 /*return*/];
-                }
-            });
-        });
-    });
-    it('Creates an account returning 201', function () {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, request.post('/signup')
                             .send(testUser)];
+                    case 1:
+                        response = _a.sent();
+                        userID = response.body.userInfo.id;
+                        token = response.body.token;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    });
+    it('Creates an account returning 200', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
+                            .post('/signup')
+                            .send({
+                            firstname: 'test',
+                            lastname: 'test',
+                            email: 'test@test.com',
+                            password: '12345',
+                        })];
                     case 1:
                         response = _a.sent();
                         expect(response.statusCode).toBe(201);
@@ -106,7 +111,7 @@ describe('Testing User Endpoint: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get("/users/userInfo/".concat(1))
+                            .get("/users/userInfo/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -124,7 +129,7 @@ describe('Testing User Endpoint: ', function () {
                     case 0:
                         token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1Ijp7ImlkIjo1OCwiZmlyc3RuYW1lIjoiQWxhYSIsImxhc3RuYW1lIjoiQWxoYXptaSIsIQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkWjRLeW1kRm9KcEh2Q3lWaWRma2U2dVRVTnkuSE1DSW0yN0FjR2hkcm1IaGx4M1ZXeHB0MFc";
                         return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                                .get("/users/userInfo/".concat(1))
+                                .get("/users/userInfo/".concat(userID))
                                 .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -140,28 +145,12 @@ describe('Testing User Endpoint: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .put("/users/update/".concat(1))
+                            .put("/users/update/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))
                             .send({
                             colName: 'firstname',
                             value: 'Araw',
                         })];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.statusCode).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    });
-    it('Delete user account returning 200', function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .delete("/users/delete/".concat(1))
-                            .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
                         expect(response.statusCode).toBe(200);

@@ -82,11 +82,11 @@ export class Orders{
         }
     } 
     // Update order status by giving value and order Id
-    async updateStatus(value:string,orderId:number): Promise<orderType>{
+    async updateStatus(orderId:number): Promise<orderType>{
         try{
             //@ts-ignore
             const connection = await client.connect();
-            const sql = `UPDATE ${Orders.tableName} SET status='${value}' WHERE id=${orderId} RETURNING *`;
+            const sql = `UPDATE ${Orders.tableName} SET status='Complete' WHERE id=${orderId} RETURNING *`;
             const result = await connection.query(sql)
             connection.release();
             return result.rows[0];

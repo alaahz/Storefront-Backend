@@ -17,8 +17,8 @@ export class OrderHandler {
     async createOrder(req: Request, res: Response) {
         const userId = parseInt(req.params.userId);
         try{
-            const orderInfo = orders.createOrder(userId)
-          return  res.status(201).json({message:'Order created successfully to user id: ' + userId});
+            const orderInfo = await orders.createOrder(userId)
+          return  res.status(201).json({orderInfo});
 
         }catch(err){
             return res.status(500).json({message:`Something went wront,${err}`})
@@ -28,12 +28,12 @@ export class OrderHandler {
     
         const addProduct : orderItemsType = {
             orderid: parseInt(req.params.orderId),
-            productid: parseInt(req.body.productId ),
-            productquantity: parseInt(req.body.productQuantity )
+            productid: parseInt(req.body.productId),
+            productquantity: parseInt(req.body.productQuantity)
         }
         try{
-            const orderInfo = orders.addProductToOrder(addProduct)
-           return res.status(200).json({message:`product id ${addProduct.productid} added to order id : ${addProduct.orderid}`})
+            const orderInfo = await orders.addProductToOrder(addProduct)
+           return res.status(200).json({orderInfo})
 
         }catch(err){
             return res.status(400).json({message:`Something went wront,${err}`})
@@ -75,9 +75,8 @@ export class OrderHandler {
     }
     async UpdateOrder(_req: Request, res: Response){
         const orderId = parseInt(_req.params.orderId);
-        const value = String(_req.body.value);
         try{
-            const productUpdated = await orders.updateStatus(value,orderId);
+            const productUpdated = await orders.updateStatus(orderId);
           return  res.status(200).json({message:`update done`})
         }catch(err){
             return res.status(400).json({message:`Something went wront,${err}`})

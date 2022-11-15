@@ -10,7 +10,7 @@
     "migrate:down": "db-migrate drop",
     "migrate:reset": "db-migrate reset",
     "watch": "rimraf ./build && tsc-watch --esModuleInterop src/server.ts --outDir ./build --onSuccess 'node ./build/server.js'",
-    "test": "export ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate test reset",
+    "test": "export ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop test",
     "lint": "eslint . --ext .ts",
     "prettier": "prettier --write  \"src/**/*.ts\""
   },

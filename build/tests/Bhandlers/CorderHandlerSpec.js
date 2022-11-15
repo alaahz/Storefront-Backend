@@ -41,26 +41,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var server_1 = __importDefault(require("../../server"));
 var supertest_1 = __importDefault(require("supertest"));
+var request = (0, supertest_1.default)(server_1.default);
 describe('Testing Order Endpoints: ', function () {
     var testUser = {
+        firstname: 'Alaa',
+        lastname: 'Alhazmi',
         email: 'alaahz@test.com',
         password: '12345',
     };
+    var testProduct = {
+        pname: 'Java Progamming',
+        price: 20,
+        category: 'Book'
+    };
+    var productID;
+    var orderID;
+    var userID;
     var token = '';
-    // beforeAll used to call signin endpoint and generate token to use it in each case 
+    //beforeAll used to call signup endpoint and return token and  userId to use it in each case 
     beforeAll(function () {
         return __awaiter(this, void 0, void 0, function () {
-            var response;
+            var response1, response2, response3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default).post('/signin')
-                            .send({
-                            email: 'alaahz@test.com',
-                            password: '12345',
-                        })];
+                    case 0: return [4 /*yield*/, request.post('/signup')
+                            .send(testUser)];
                     case 1:
-                        response = _a.sent();
-                        token = response.body.token;
+                        response1 = _a.sent();
+                        userID = response1.body.userInfo.id;
+                        token = response1.body.token;
+                        return [4 /*yield*/, request.post('/products/newProduct')
+                                .set('Authorization', "Bearer ".concat(token))
+                                .send(testProduct)];
+                    case 2:
+                        response2 = _a.sent();
+                        productID = response2.body.productInfo.id;
+                        return [4 /*yield*/, request.post("/orders/newOrder/".concat(userID))
+                                .set('Authorization', "Bearer ".concat(token))];
+                    case 3:
+                        response3 = _a.sent();
+                        orderID = response3.body.orderInfo.id;
                         return [2 /*return*/];
                 }
             });
@@ -72,7 +92,7 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .post("/orders/newOrder/".concat(2))
+                            .post("/orders/newOrder/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -88,10 +108,10 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .post("/orders/addProduct/".concat(10))
+                            .post("/orders/addProduct/".concat(orderID))
                             .set('Authorization', "Bearer ".concat(token))
                             .send({
-                            "productId": 4,
+                            "productId": productID,
                             "productQuantity": 1
                         })];
                     case 1:
@@ -108,7 +128,7 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get("/orders/completed/".concat(2))
+                            .get("/orders/completed/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -124,7 +144,7 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get("/orders/userOrderItems/".concat(2))
+                            .get("/orders/userOrderItems/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -140,11 +160,8 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .put("/orders/update/".concat(4))
-                            .set('Authorization', "Bearer ".concat(token))
-                            .send({
-                            value: 'Complete',
-                        })];
+                            .put("/orders/update/".concat(orderID))
+                            .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
                         expect(response.statusCode).toBe(200);
@@ -159,7 +176,7 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .get("/orders/allOrders/".concat(2))
+                            .get("/orders/allOrders/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -175,7 +192,7 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .delete("/orders/delete/".concat(4, "/").concat(2))
+                            .delete("/orders/delete/".concat(orderID, "/").concat(userID))
                             .set('Authorization', "Bearer ".concat(token))];
                     case 1:
                         response = _a.sent();
@@ -191,9 +208,9 @@ describe('Testing Order Endpoints: ', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                            .delete("/orders/".concat(4))
+                            .delete("/orders/".concat(userID))
                             .set('Authorization', "Bearer ".concat(token))
-                            .send({ productId: 3 })];
+                            .send({ productId: productID })];
                     case 1:
                         response = _a.sent();
                         expect(response.statusCode).toBe(200);

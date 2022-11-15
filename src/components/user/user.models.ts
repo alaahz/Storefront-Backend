@@ -27,7 +27,7 @@ export class User {
         try{
             //@ts-ignore
             const connection = await client.connect();
-            const sql = `INSERT INTO ${User.tableName}(firstName, lastName, email, password) VALUES ($1,$2,$3,$4) RETURNING firstname, lastname, email`;
+            const sql = `INSERT INTO ${User.tableName}(firstName, lastName, email, password) VALUES ($1,$2,$3,$4) RETURNING *`;
             const hash = bcrypt.hashSync(
                 userInfo.password + User.pepper, 
                 parseInt(User.saltRound) 

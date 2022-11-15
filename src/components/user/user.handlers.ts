@@ -31,7 +31,7 @@ export class UserHandler{
         try{
             const newUser = await user.createUser(userInfo);
             var token = jwt.sign({u:newUser},UserHandler.tokenSecret);
-           return res.status(201).json({token:token});
+           return res.status(201).json({token:token,userInfo:newUser});
             
         }catch(err){
             return res.status(400).json(`Could not sign up, ${err}`)

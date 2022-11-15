@@ -63,7 +63,7 @@ var User = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = "INSERT INTO ".concat(User.tableName, "(firstName, lastName, email, password) VALUES ($1,$2,$3,$4) RETURNING firstname, lastname, email");
+                        sql = "INSERT INTO ".concat(User.tableName, "(firstName, lastName, email, password) VALUES ($1,$2,$3,$4) RETURNING *");
                         hash = bcrypt_1.default.hashSync(userInfo.password + User.pepper, parseInt(User.saltRound));
                         return [4 /*yield*/, connection.query(sql, [userInfo.firstname, userInfo.lastname, userInfo.email, hash])];
                     case 2:

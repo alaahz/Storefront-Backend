@@ -5,7 +5,7 @@ import {checkEmail} from '../../middlewares/checkEmail'
 const userHandler = new UserHandler();
 const userRouters = (app:Express) =>{
 
-    app.post('/signup',checkEmail, userHandler.SignUp)
+    app.post('/signup', userHandler.SignUp)
     app.post('/signin', userHandler.SignIn)
     app.get('/users/allUsers',verifyAuthToken,userHandler.getAllUsers)
     app.get('/users/userInfo/:userId',verifyAuthToken,userHandler.getOneUser)

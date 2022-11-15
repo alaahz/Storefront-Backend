@@ -175,7 +175,7 @@ var Orders = /** @class */ (function () {
         });
     };
     // Update order status by giving value and order Id
-    Orders.prototype.updateStatus = function (value, orderId) {
+    Orders.prototype.updateStatus = function (orderId) {
         return __awaiter(this, void 0, void 0, function () {
             var connection, sql, result, err_6;
             return __generator(this, function (_a) {
@@ -185,7 +185,7 @@ var Orders = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = "UPDATE ".concat(Orders.tableName, " SET status='").concat(value, "' WHERE id=").concat(orderId, " RETURNING *");
+                        sql = "UPDATE ".concat(Orders.tableName, " SET status='Complete' WHERE id=").concat(orderId, " RETURNING *");
                         return [4 /*yield*/, connection.query(sql)];
                     case 2:
                         result = _a.sent();

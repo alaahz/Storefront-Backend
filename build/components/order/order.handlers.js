@@ -53,43 +53,55 @@ var OrderHandler = /** @class */ (function () {
     }
     OrderHandler.prototype.createOrder = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var userId, orderInfo;
+            var userId, orderInfo, err_1;
             return __generator(this, function (_a) {
-                userId = parseInt(req.params.userId);
-                try {
-                    orderInfo = orders.createOrder(userId);
-                    return [2 /*return*/, res.status(201).json({ message: 'Order created successfully to user id: ' + userId })];
+                switch (_a.label) {
+                    case 0:
+                        userId = parseInt(req.params.userId);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, orders.createOrder(userId)];
+                    case 2:
+                        orderInfo = _a.sent();
+                        return [2 /*return*/, res.status(201).json({ orderInfo: orderInfo })];
+                    case 3:
+                        err_1 = _a.sent();
+                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_1) })];
+                    case 4: return [2 /*return*/];
                 }
-                catch (err) {
-                    return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err) })];
-                }
-                return [2 /*return*/];
             });
         });
     };
     OrderHandler.prototype.userAddProductToCart = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var addProduct, orderInfo;
+            var addProduct, orderInfo, err_2;
             return __generator(this, function (_a) {
-                addProduct = {
-                    orderid: parseInt(req.params.orderId),
-                    productid: parseInt(req.body.productId),
-                    productquantity: parseInt(req.body.productQuantity)
-                };
-                try {
-                    orderInfo = orders.addProductToOrder(addProduct);
-                    return [2 /*return*/, res.status(200).json({ message: "product id ".concat(addProduct.productid, " added to order id : ").concat(addProduct.orderid) })];
+                switch (_a.label) {
+                    case 0:
+                        addProduct = {
+                            orderid: parseInt(req.params.orderId),
+                            productid: parseInt(req.body.productId),
+                            productquantity: parseInt(req.body.productQuantity)
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, orders.addProductToOrder(addProduct)];
+                    case 2:
+                        orderInfo = _a.sent();
+                        return [2 /*return*/, res.status(200).json({ orderInfo: orderInfo })];
+                    case 3:
+                        err_2 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_2) })];
+                    case 4: return [2 /*return*/];
                 }
-                catch (err) {
-                    return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err) })];
-                }
-                return [2 /*return*/];
             });
         });
     };
     OrderHandler.prototype.getUserOrder = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var userId, cart, err_1;
+            var userId, cart, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -102,8 +114,8 @@ var OrderHandler = /** @class */ (function () {
                         cart = _a.sent();
                         return [2 /*return*/, res.status(200).json({ orderList: cart })];
                     case 3:
-                        err_1 = _a.sent();
-                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_1) })];
+                        err_3 = _a.sent();
+                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_3) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -111,7 +123,7 @@ var OrderHandler = /** @class */ (function () {
     };
     OrderHandler.prototype.getUserOrderItems = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var userId, cart, err_2;
+            var userId, cart, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -124,8 +136,8 @@ var OrderHandler = /** @class */ (function () {
                         cart = _a.sent();
                         return [2 /*return*/, res.status(200).json({ userOrderItems: cart })];
                     case 3:
-                        err_2 = _a.sent();
-                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_2) })];
+                        err_4 = _a.sent();
+                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_4) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -133,7 +145,7 @@ var OrderHandler = /** @class */ (function () {
     };
     OrderHandler.prototype.getUserCompletedOrders = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var userId, catProducts, err_3;
+            var userId, catProducts, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -146,8 +158,8 @@ var OrderHandler = /** @class */ (function () {
                         catProducts = _a.sent();
                         return [2 /*return*/, res.status(200).json({ CompletedOrderList: catProducts })];
                     case 3:
-                        err_3 = _a.sent();
-                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_3) })];
+                        err_5 = _a.sent();
+                        return [2 /*return*/, res.status(500).json({ message: "Something went wront,".concat(err_5) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -155,22 +167,21 @@ var OrderHandler = /** @class */ (function () {
     };
     OrderHandler.prototype.UpdateOrder = function (_req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var orderId, value, productUpdated, err_4;
+            var orderId, productUpdated, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         orderId = parseInt(_req.params.orderId);
-                        value = String(_req.body.value);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, orders.updateStatus(value, orderId)];
+                        return [4 /*yield*/, orders.updateStatus(orderId)];
                     case 2:
                         productUpdated = _a.sent();
                         return [2 /*return*/, res.status(200).json({ message: "update done" })];
                     case 3:
-                        err_4 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_4) })];
+                        err_6 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_6) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -178,7 +189,7 @@ var OrderHandler = /** @class */ (function () {
     };
     OrderHandler.prototype.deleteOrder = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var productId, userId, orderDeleted, err_5;
+            var productId, userId, orderDeleted, err_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -192,8 +203,8 @@ var OrderHandler = /** @class */ (function () {
                         orderDeleted = _a.sent();
                         return [2 /*return*/, res.status(200).json({ message: 'delete done' })];
                     case 3:
-                        err_5 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_5) })];
+                        err_7 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_7) })];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -201,7 +212,7 @@ var OrderHandler = /** @class */ (function () {
     };
     OrderHandler.prototype.deleteProductOrder = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var orderId, productId, orderDeleted, err_6;
+            var orderId, productId, orderDeleted, err_8;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -215,8 +226,8 @@ var OrderHandler = /** @class */ (function () {
                         orderDeleted = _a.sent();
                         return [2 /*return*/, res.status(200).json({ message: 'delete done' })];
                     case 3:
-                        err_6 = _a.sent();
-                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_6) })];
+                        err_8 = _a.sent();
+                        return [2 /*return*/, res.status(400).json({ message: "Something went wront,".concat(err_8) })];
                     case 4: return [2 /*return*/];
                 }
             });
