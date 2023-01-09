@@ -1,0 +1,32 @@
+_id: req_2c19077755864f299526744c74ff5ddd
+type: Request
+parentId: fld_8510f5dce6384631bfd8df6f1914ec32
+modified: 1673261348602
+created: 1673260950020
+url: "{{baseUrl}}/products/newProduct"
+name: Create Product
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+        "pname":"Java developer",
+        "price":"20",
+        "category":"Book"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1673260950020
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
