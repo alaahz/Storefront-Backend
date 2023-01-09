@@ -1,0 +1,14 @@
+_id: env_31e837a09e7f456683147ee842ad6cd5
+type: Environment
+parentId: env_ee3debd521589354d3762748c986957634dbd5d0
+modified: 1673255482296
+created: 1673255434885
+name: Store Dev
+data:
+  baseUrl: http://localhost:3000
+dataPropertyOrder:
+  "&":
+    - baseUrl
+color: null
+isPrivate: false
+metaSortKey: 1673255434885
