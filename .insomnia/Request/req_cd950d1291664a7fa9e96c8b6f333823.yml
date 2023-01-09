@@ -1,0 +1,30 @@
+_id: req_cd950d1291664a7fa9e96c8b6f333823
+type: Request
+parentId: fld_7ad594a9b4c4452394d1dfb46cc051e2
+modified: 1673259913379
+created: 1673259831610
+url: "{{ _.baseUrl }}/signin"
+name: signin
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+        "email":"alaa6@gmail.com",
+        "password":"alaa12345"
+
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673259831610
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
