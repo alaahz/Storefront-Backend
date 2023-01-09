@@ -1,0 +1,31 @@
+_id: req_fbbb0e446c234b01b7a13304c84d990f
+type: Request
+parentId: fld_7ad594a9b4c4452394d1dfb46cc051e2
+modified: 1673260532600
+created: 1673260342045
+url: "{{ _.baseUrl }}/users/update/7"
+name: Update User Info
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+        "colName":"lastName",
+        "value":"test"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1673260342045
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
