@@ -1,0 +1,23 @@
+_id: req_3fbfe6b8c43948039d251964465338fb
+type: Request
+parentId: fld_7ad594a9b4c4452394d1dfb46cc051e2
+modified: 1673260175035
+created: 1673259928195
+url: "{{ _.baseUrl }}/users/allUsers"
+name: Get All user
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1673259928195
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
