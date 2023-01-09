@@ -1,0 +1,23 @@
+_id: req_d9df60f4a91244bfa0cdd4a61d8ebd0b
+type: Request
+parentId: fld_7ad594a9b4c4452394d1dfb46cc051e2
+modified: 1673260325434
+created: 1673260220846
+url: "{{baseUrl}}/users/userInfo/7"
+name: Get User Info
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1673260220846
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,14 +1,17 @@
 _id: env_31e837a09e7f456683147ee842ad6cd5
 type: Environment
 parentId: env_ee3debd521589354d3762748c986957634dbd5d0
-modified: 1673255482296
+modified: 1673260037031
 created: 1673255434885
 name: Store Dev
 data:
   baseUrl: http://localhost:3000
+  token: "{% response 'body', 'req_cd950d1291664a7fa9e96c8b6f333823',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
 dataPropertyOrder:
   "&":
     - baseUrl
+    - token
 color: null
 isPrivate: false
 metaSortKey: 1673255434885

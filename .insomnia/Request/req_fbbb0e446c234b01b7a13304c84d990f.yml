@@ -1,27 +1,27 @@
-_id: req_952c7115066044d3a5821353b988a44f
+_id: req_fbbb0e446c234b01b7a13304c84d990f
 type: Request
 parentId: fld_7ad594a9b4c4452394d1dfb46cc051e2
-modified: 1673259814907
-created: 1673255421522
-url: "{{ _.baseUrl }}/signup"
-name: signup
+modified: 1673260532600
+created: 1673260342045
+url: "{{ _.baseUrl }}/users/update/7"
+name: Update User Info
 description: ""
-method: POST
+method: PUT
 body:
   mimeType: application/json
   text: |-
     {
-        "firstname":"Alaa",
-        "lastname":"Alhazmi",
-        "email":"alaa6@gmail.com",
-        "password":"alaa12345"
+        "colName":"lastName",
+        "value":"test"
     }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
-authentication: {}
-metaSortKey: -1673255421522
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1673260342045
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

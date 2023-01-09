@@ -1,27 +1,26 @@
-_id: req_952c7115066044d3a5821353b988a44f
+_id: req_cd950d1291664a7fa9e96c8b6f333823
 type: Request
 parentId: fld_7ad594a9b4c4452394d1dfb46cc051e2
-modified: 1673259814907
-created: 1673255421522
-url: "{{ _.baseUrl }}/signup"
-name: signup
+modified: 1673259913379
+created: 1673259831610
+url: "{{ _.baseUrl }}/signin"
+name: signin
 description: ""
 method: POST
 body:
   mimeType: application/json
   text: |-
     {
-        "firstname":"Alaa",
-        "lastname":"Alhazmi",
         "email":"alaa6@gmail.com",
         "password":"alaa12345"
+
     }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
 authentication: {}
-metaSortKey: -1673255421522
+metaSortKey: -1673259831610
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true
